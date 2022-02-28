@@ -1,0 +1,160 @@
+===APP NOTES===
+---------------
+
+
+
+#QUESTIONS
+
+
+#DESCRIPTION
+  - Blockchain social network where you can get paid to post
+  - Other users can tip your status updates with crypto so your rewarded for great content
+  - It is programmed to show most tipped posts at the top of the feed, as opposed to a manipulated algorithm
+
+
+
+#FLOW 
+
+  *clientside*
+
+
+  *serverside*
+
+
+
+
+#DEBUGGING
+
+
+
+
+INSTALLATION
+------------
+
+#SERVER START
+
+  $ npm run start
+
+#RUN SCRIPTS
+
+
+
+
+
+TECHNOLOGY STACK AND TOOLS
+--------------------------
+
+
+#FULLSTACK
+
+
+  *Languages*
+   - Language
+
+  *Frameworks*
+
+        *Testing Frameworks*
+        - Framework
+
+
+  *Libraries*
+
+  *Template Engines*
+
+
+
+#FRONTEND
+
+  *Languages*
+   - React
+
+  *Frameworks*
+
+
+        *Theming Frameworks*
+
+
+  *Libraries*
+
+  *Template Engines*
+
+  *Clientside Host*
+
+
+#BACKEND
+
+
+  *Languages*
+   - Solidity
+
+  *Frameworks*
+
+        *Testing Frameworks*
+        - Ganache
+          . Configuration
+            +
+          . Addresses
+
+
+  *Libraries*
+
+  *Template Engines*
+
+
+#BLOCKCHAIN
+
+
+  *Contract Addresses*
+    0x43e28E835d9EB813799dcd91BcD5539A6Ec7f8BD
+
+  *webThree Library*
+
+
+  *Ethereum Node API Provider*
+    - MetaMask
+
+
+  *Testnets*
+    - <testnet>
+      . Configuration
+
+      . Addresses
+
+
+#DEPENDENCIES
+
+  - Node
+
+
+
+#OTHER
+
+
+  *Account Manager*
+
+  *Tools*
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
