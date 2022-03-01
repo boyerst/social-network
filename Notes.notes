@@ -90,13 +90,17 @@ TECHNOLOGY STACK AND TOOLS
   *Frameworks*
 
         *Testing Frameworks*
-        - Ganache
+        - Truffle
           . Configuration
             +
           . Addresses
+            + Contract Address:     0x43e28E835d9EB813799dcd91BcD5539A6Ec7f8BD
 
 
   *Libraries*
+  - Two libraries that come with Truffle:
+    . Mocha
+    . Chai Assertion Library
 
   *Template Engines*
 
@@ -105,7 +109,7 @@ TECHNOLOGY STACK AND TOOLS
 
 
   *Contract Addresses*
-    0x43e28E835d9EB813799dcd91BcD5539A6Ec7f8BD
+
 
   *webThree Library*
 
