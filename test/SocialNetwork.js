@@ -18,11 +18,18 @@ contract('SocialNetwork', (accounts) => {
     // This var represents the contract deployed to the blockchain
   let socialNetwork
 
+  // Use a hook to assign this varaible the value of the deployed contract
+  before(async () => {
+    socialNetwork = await SocialNetwork.deployed()
+  })
+
   describe('deployment', async () => {
     it('deploys successfully', async () => {
+      // REFACTOR: we removed assignment of contract here to do it in a before() so it can be used in all tests
       // Fetch the contract
         // We have already declared socialNetwork with let, so we can assign this variable value
-      socialNetwork = await SocialNetwork.deployed()
+      // socialNetwork = await SocialNetwork.deployed()
+
       // Fetch contract address  
       const address = await socialNetwork.address
       // "assert.condition (1st value, 2nd value)"
@@ -34,6 +41,11 @@ contract('SocialNetwork', (accounts) => {
       assert.notEqual(address, null)
       // ... not undefined
       assert.notEqual(address, undefined)
+    })
+
+    it('has a name', async () => {
+      const name = await socialNetwork.name()
+      assert.equal(name, 'Social Network')    
     })
   })
       
