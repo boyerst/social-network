@@ -48,5 +48,46 @@ contract('SocialNetwork', (accounts) => {
       assert.equal(name, 'Social Network')    
     })
   })
-      
+  
+  describe('posts', async () => {
+    it('creates posts', async () => {
+        
+    })  
+    it('lists posts', async () => {
+        
+    }) 
+    it('allows users to tip posts', async () => {
+        
+    })
+  })
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
