@@ -12,7 +12,7 @@ require('Chai')
     // Callback has a var that contains all accounts provided by Ganache
     // accounts is an array of all accounts
     // We use said accounts as examples inside of the tests
-contract('SocialNetwork', (accounts) => {
+contract('SocialNetwork', ([deployer, author, tipper]) => {
   // Basic test to confirm contract deployment
   // We confirm deployment by confirming contract addess is on blockchain
     // This var represents the contract deployed to the blockchain
@@ -50,8 +50,41 @@ contract('SocialNetwork', (accounts) => {
   })
   
   describe('posts', async () => {
+    // We say 'let result' so that we can access result later in the block, because we declare a variable using 'let' this means it will only be avail in the block
+    let result, postCount
+    // The two conditions we will check
+      // 1. That the post was created (by digging into result below)
+      // 2. That the postCount increased
     it('creates posts', async () => {
-        
+      // Call the createPosts() function
+      // Pass in a hardcoded value for the post content ('This is my first post')
+      // But, we need to know who the author of the post is 
+      // This is where the keyword msg.sender comes in
+      // We find out who is actually sending the function
+      // We do this using function metadata
+      // From the client perspective, inside of JavaScript, we pass in metadata AFTER the regular args - so here we pass it in AFTER the _content arg
+      // The function itself, function createPosts(), only takes one regular arg (_content), but it also takes an OPTIONAL arg after the regular arg
+      // The optional arg is an object, and this is where we will add all of the function metadata
+      // We add 'from: ' which will correspond with msg.sender
+      // Next we need to get the actual address of msg.sender
+      // Recall that our callback function takes a var 'accounts' that represents all gananche accounts
+        // We could pass in ...createPosts('This is my first post', accounts[0]) to fetch the account out of the array
+        // Instead we will specify the account to be called w a specific var
+        // We refactor the 'accounts' var we passed into our callback to an array that specifies 3 diff accounts that we will always refer to inside this test...
+        // From (accounts) -> ([deployer, author, tipper])
+          // deployer = the account that deploys the contract
+          // author = the person who creates posts
+          // tipper = the person who tips the author
+      // Back to targeting the actual sender, we now specificy from: to correspond with the author as the msg.sender
+      // Then we add await because it is async
+        // "await for this thing to be done and go do something else while you do"
+
+      result = await socialNetwork.createPost('This is my first post', { from: author })
+      // Next we want to ensure that the post was created
+      postCount = await socialNetwork.postCount()
+      // SUCCESS
+      assert.equal(postCount, 1)
+
     })  
     it('lists posts', async () => {
         
@@ -62,7 +95,6 @@ contract('SocialNetwork', (accounts) => {
   })
 
 })
-
 
 
 

@@ -19,7 +19,7 @@ contract SocialNetwork {
     // Unique Id for posts
     uint id;
     // Post content
-    string content
+    string content;
     // Tip
     uint tipAmount;
     // Address of author to send tips to
@@ -49,7 +49,17 @@ contract SocialNetwork {
     //posts[postCount] = _post;
     // We can consolidate lines 45 & 49 to create post and save to blockchain all in one line like so:
     // mapping[key] = value
+    // msg.sender will be saved as the author value inside of the struct which will be saved inside of the post mapping
     posts[postCount] = Post(postCount, _content, 0, msg.sender);
   }
 
 }
+
+
+
+
+
+
+
+
+
