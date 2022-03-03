@@ -86,12 +86,12 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       assert.equal(postCount, 1)
 
     })  
-    it('lists posts', async () => {
+    // it('lists posts', async () => {
         
-    }) 
-    it('allows users to tip posts', async () => {
+    // }) 
+    // it('allows users to tip posts', async () => {
         
-    })
+    // })
   })
 
 })
