@@ -78,18 +78,28 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       // Back to targeting the actual sender, we now specificy from: to correspond with the author as the msg.sender
       // Then we add await because it is async
         // "await for this thing to be done and go do something else while you do"
-
       result = await socialNetwork.createPost('This is my first post', { from: author })
       // Next we want to ensure that the post was created
       postCount = await socialNetwork.postCount()
+
       // SUCCESS
       assert.equal(postCount, 1)
       // We can grab data from the result object
         // This object contains logs which contains our event
       const event = result.logs[0].args
+      // ↑↑↑ Once we access that event we can access and verify if id, content, tipAmount, author are all correct
+      assert.equal(event.id.toNumber(), postCount.toNumber(), 'id is correct')
+      assert.equal(event.content, 'This is my first post', 'content is correct')
+      assert.equal(event.tipAmount, '0', 'tip amount is correct')
+      assert.equal(event.author, author, 'author is correct')
       // When we run truffle test this console will print before 'creates post' because the code execution continues to the end while we await createPost and postCount 
-      console.log(result)
-      console.log(event)
+      console.log(result, '⬅ ❌ Result')
+      console.log(event, '⬅ ❌ Event')
+      console.log(postCount, '⬅ ❌ postCount')
+
+      // FAILURE
+        // Post must have content
+      await socialNetwork.createPost('', { from: author }).should.be.rejected;
 
 
     })  

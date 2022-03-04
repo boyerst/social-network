@@ -41,6 +41,9 @@ contract SocialNetwork {
 
   // Pass in a string variable 'content' that has the value of the users' content  
   function createPost(string memory _content) public {
+    // REQUIRE VALID CONTENT
+      // Takes the content string and converts it to a bytes array, must be > 0
+    require(bytes(_content).length > 0);
     // INCREMENT THE POST
     // Creat a new _id for every post that is created - using a counter cache
     // First we create a state var with initial value of 0
