@@ -84,6 +84,13 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       postCount = await socialNetwork.postCount()
       // SUCCESS
       assert.equal(postCount, 1)
+      // We can grab data from the result object
+        // This object contains logs which contains our event
+      const event = result.logs[0].args
+      // When we run truffle test this console will print before 'creates post' because the code execution continues to the end while we await createPost and postCount 
+      console.log(result)
+      console.log(event)
+
 
     })  
     // it('lists posts', async () => {
@@ -95,9 +102,6 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
   })
 
 })
-
-
-
 
 
 

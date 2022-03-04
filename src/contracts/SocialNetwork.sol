@@ -26,6 +26,14 @@ contract SocialNetwork {
     address author;
   }
 
+  event PostCreated(
+   uint id, 
+   string content,
+   uint tipAmount, 
+   address payable author
+  );
+
+
   constructor() public {
     name = "Social Network";
 
@@ -33,6 +41,7 @@ contract SocialNetwork {
 
   // Pass in a string variable 'content' that has the value of the users' content  
   function createPost(string memory _content) public {
+    // INCREMENT THE POST
     // Creat a new _id for every post that is created - using a counter cache
     // First we create a state var with initial value of 0
     // Everytime a new post is created, that var is incremented by 1 with the new value being assigned to the newly created post
@@ -40,7 +49,7 @@ contract SocialNetwork {
       // postCount is passed into the new post and becomes the new id for said post
       // The next time around, the postCount will be incremented by 1 and assigned all over again
     postCount ++;
-    // Instantiate the Post
+    // CREATE THE POST
       // Pass in the args from the data structure
     //_post = Post(postCount, _content, 0, msg.sender);
     // Find a home for the new Post...
@@ -49,8 +58,18 @@ contract SocialNetwork {
     //posts[postCount] = _post;
     // We can consolidate lines 45 & 49 to create post and save to blockchain all in one line like so:
     // mapping[key] = value
-    // msg.sender will be saved as the author value inside of the struct which will be saved inside of the post mapping
+      // PostCount: doesn't need to be passed bc is a state var that we access and increment within the function
+      // _content: passed into the function
+      // 0: default tipAmount
+      // msg.sender: doesn't need to be passed in bc will grab from the person createing the post
+        // Will be saved as the author value inside of the struct which will be saved inside of the post mapping
     posts[postCount] = Post(postCount, _content, 0, msg.sender);
+    // TRIGGER EVENT
+      // To be trigged by smart contract and subscribed to by external consumers
+      // We emit the eaxact same values that we passed into the mapping
+    emit PostCreated(postCount, _content, 0, msg.sender);
+
+
   }
 
 }
