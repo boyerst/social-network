@@ -70,7 +70,8 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       postCount = await socialNetwork.postCount()
     })
 
-
+    // TEST: CREATES POSTS
+      // We retreive data directly from the createPost() function
     // The two conditions we will check
       // 1. That the post was created (by digging into result below)
       // 2. That the postCount increased
@@ -116,9 +117,20 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
 
 
     })  
-    // it('lists posts', async () => {
-        
-    // }) 
+    // TEST: LISTS POSTS
+      // We retreive data directly from the mapping to test if the post is being listed/stored in the mapping
+    // We call the 'posts' mapping to test for listing posts
+    it('lists posts', async () => {      
+      // We pass in the postCount that is fetched in the hook
+      // This refers to the latest post
+      const post = await socialNetwork.posts(postCount)
+      assert.equal(post.id.toNumber(), postCount.toNumber(), 'id is correct')
+      assert.equal(post.content, 'This is my first post', 'content is correct')
+      assert.equal(post.tipAmount, '0', 'tip amount is correct')
+      assert.equal(post.author, author, 'author is correct')
+    }) 
+
+
     // it('allows users to tip posts', async () => {
         
     // })
