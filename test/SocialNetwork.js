@@ -12,6 +12,12 @@ require('Chai')
     // Callback has a var that contains all accounts provided by Ganache
     // accounts is an array of all accounts
     // We use said accounts as examples inside of the tests
+  // We have 3 addresses that are being used with Ganache
+    // 1. Deployer: Ganache address #1
+      // ETH taked from this account whenever deployed() is called
+    // 2. Author: Ganache address #2
+      // ETH taken from this account whenever createPost() called
+    // 3. Tipper: Ganache address #3
 contract('SocialNetwork', ([deployer, author, tipper]) => {
   // Basic test to confirm contract deployment
   // We confirm deployment by confirming contract addess is on blockchain
@@ -49,9 +55,22 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
     })
   })
   
+
+
   describe('posts', async () => {
     // We say 'let result' so that we can access result later in the block, because we declare a variable using 'let' this means it will only be avail in the block
     let result, postCount
+
+    before(async () => {
+      // To target the address of the sender, we specificy from: to correspond with the author as the msg.sender
+      // Then we add await because it is async
+        // "await for this thing to be done and go do something else while you do"
+      result = await socialNetwork.createPost('This is my first post', { from: author })
+      // Next we want to ensure that the post was created
+      postCount = await socialNetwork.postCount()
+    })
+
+
     // The two conditions we will check
       // 1. That the post was created (by digging into result below)
       // 2. That the postCount increased
@@ -75,12 +94,6 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
           // deployer = the account that deploys the contract
           // author = the person who creates posts
           // tipper = the person who tips the author
-      // Back to targeting the actual sender, we now specificy from: to correspond with the author as the msg.sender
-      // Then we add await because it is async
-        // "await for this thing to be done and go do something else while you do"
-      result = await socialNetwork.createPost('This is my first post', { from: author })
-      // Next we want to ensure that the post was created
-      postCount = await socialNetwork.postCount()
 
       // SUCCESS
       assert.equal(postCount, 1)
