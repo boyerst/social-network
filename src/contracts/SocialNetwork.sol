@@ -23,14 +23,22 @@ contract SocialNetwork {
     // Tip
     uint tipAmount;
     // Address of author to send tips to
-    address author;
+    address payable author;
   }
 
   event PostCreated(
-   uint id, 
-   string content,
-   uint tipAmount, 
-   address payable author
+    uint id, 
+    string content,
+    uint tipAmount, 
+    address payable author
+  );
+
+
+  event PostTipped(
+    uint id, 
+    string content,
+    uint tipAmount, 
+    address payable author
   );
 
 
@@ -38,6 +46,10 @@ contract SocialNetwork {
     name = "Social Network";
 
   }
+
+
+
+
 
   // Pass in a string variable 'content' that has the value of the users' content  
   function createPost(string memory _content) public {
@@ -71,8 +83,31 @@ contract SocialNetwork {
       // To be trigged by smart contract and subscribed to by external consumers
       // We emit the eaxact same values that we passed into the mapping
     emit PostCreated(postCount, _content, 0, msg.sender);
+  }
 
 
+  // Pass in the id of the post we want to issue a tip to
+  function tipPost(uint _id) public payable {
+    // Fetch the post out of the mapping, create a new copy, and store in memory
+      // This won't actually affect the post on the blockchain until we 
+      // Pass in the _id to the mapping (we read it just like we write it)
+    Post memory _post = posts[_id];
+
+    // Fetch the author of the post
+    address payable _author = post.author;
+    // Pay the author
+      // Call transfer() function
+    address(_author).transfer(msg.value);
+    // Increment the tip amount on the post whenever the tip comes in
+      // Since we only have one arg passed into this function (the _id) - how do we fetch and add the tipAmount?
+      // How do we tell the function we want to tip ETH when there is no arg for the amount?
+        // A: Solidity allows you to use function metadata (example: msg.sender) to track the amount of ether that is sent in when the function is called
+    _post.tipAmount = _post.tipAmount + msg.value;
+    // Update the post
+      // We update the manipulated post and put it back on the blockchain
+    posts[_id] = _post;
+    // Trigger an event
+    emit PostTipped(postCount, _post.content, _post.tipAmount, _author);
   }
 
 }
