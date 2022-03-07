@@ -9,8 +9,9 @@ require('Chai')
 
 // Create skeleton for tests
   // Pass in callback function
-    // Callback has a var that contains all accounts provided by Ganache
-    // accounts is an array of all accounts
+    // Truffle gives us a list of all the accounts that we can pass into out test 
+      // We usually just pass in 'accounts' (an array of all accounts)
+      // But here we specifically isolate the first three❓❓❓
     // We use said accounts as examples inside of the tests
   // We have 3 addresses that are being used with Ganache
     // 1. Deployer: Ganache address #1
@@ -131,9 +132,29 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
     }) 
 
 
-    // it('allows users to tip posts', async () => {
-        
-    // })
+    it('allows users to tip posts', async () => {
+      // 1. We pass in the latest post by referencing postCount
+        // This is the latest because the postCount = total number of posts & the highest number will be the latest incremented post
+      // 2. We pass in the address via the metadata, referencing the tippers address
+        // This is the 3rd account of the accounts array that we passed into the callback above (an array given to us by Truffle)
+        // 'From: ' corresponds with msg.sender
+      // 3. We pass in some ETH via the metadata
+        // In the test, we are interpreting 'msg.value' from the function
+        // 'Value: ' corresponds with msg.value
+      // We tell it a) which post to tip, b) who the tipper is, c) the value that we want to test tip
+      result = await socialNetwork.tipPost(postCount, { from: tipper, value: web3.utils.toWei('1', 'Ether') })
+
+      // SUCCESS
+     
+      const event = result.logs[0].args
+
+      assert.equal(event.id.toNumber(), postCount.toNumber(), 'id is correct')
+      assert.equal(event.content, 'This is my first post', 'content is correct')
+      // Ensure tip amount is equal to 1 ether
+      assert.equal(event.tipAmount, '1000000000000000000', 'tip amount is correct')
+      assert.equal(event.author, author, 'author is correct')
+
+    })
   })
 
 })
