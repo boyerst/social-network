@@ -133,6 +133,18 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
 
 
     it('allows users to tip posts', async () => {
+      // Check if user receives the tip
+        // Compare beginning balance with after balance, ensuring positive increase
+      // Track the author balance before purchase
+      // Create a variable 'oldAuthorBalance'
+      let oldAuthorBalance
+      // Use getBalance() to check bal of an address
+      oldAuthorBalance = await web3.eth.getBalance(author)
+      // Convert the above fetched balance to a BigNumber (BN)
+      oldAuthorBalance = new web3.utils.BN(oldAuthorBalance)  
+      // Check if author received the funds (BELOW)
+
+
       // 1. We pass in the latest post by referencing postCount
         // This is the latest because the postCount = total number of posts & the highest number will be the latest incremented post
       // 2. We pass in the address via the metadata, referencing the tippers address
@@ -154,11 +166,27 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       assert.equal(event.tipAmount, '1000000000000000000', 'tip amount is correct')
       assert.equal(event.author, author, 'author is correct')
 
+      // Check if author received the funds
+        // Same logic we did for oldAuthorBalance
+      let newAuthorBalance
+      newAuthorBalance = await web3.eth.getBalance(author)
+      newAuthorBalance = new web3.utils.BN(newAuthorBalance)
+
+      // Factor in tip amount for test to ensure if user receives the tip
+      let tipAmount
+      tipAmount = web3.utils.toWei('1', 'Ether')
+      tipAmount = new web3.utils.BN(tipAmount)
+
+      // expectedBalance should = the balance before the tip + the tip
+      const expectedBalance = oldAuthorBalance.add(tipAmount)
+
+      assert.equal(newAuthorBalance.toString(), expectedBalance.toString())
+
+
     })
   })
 
 })
-
 
 
 
