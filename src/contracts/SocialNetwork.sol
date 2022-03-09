@@ -88,6 +88,10 @@ contract SocialNetwork {
 
   // Pass in the id of the post we want to issue a tip to
   function tipPost(uint _id) public payable {
+    // Ensure the id is valid
+      // Require that the id is greater than 0 and less than or equal to postCount
+      // If it is outside of this range it will not be a tippable post
+    require(_id > 0 && _id <= postCount);
     // Fetch the post out of the mapping, create a new copy, and store in memory while we execute our logic on it
       // We store it in memory beause this data location is cleared after the tx 
       // This won't actually affect the post on the blockchain until we update the original copy that is stored in our mapping (in Storage data location)
@@ -112,6 +116,23 @@ contract SocialNetwork {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

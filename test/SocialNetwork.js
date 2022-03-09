@@ -157,11 +157,10 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       result = await socialNetwork.tipPost(postCount, { from: tipper, value: web3.utils.toWei('1', 'Ether') })
 
       // SUCCESS
-     
       const event = result.logs[0].args
-
       assert.equal(event.id.toNumber(), postCount.toNumber(), 'id is correct')
       assert.equal(event.content, 'This is my first post', 'content is correct')
+
       // Ensure tip amount is equal to 1 ether
       assert.equal(event.tipAmount, '1000000000000000000', 'tip amount is correct')
       assert.equal(event.author, author, 'author is correct')
@@ -181,6 +180,13 @@ contract('SocialNetwork', ([deployer, author, tipper]) => {
       const expectedBalance = oldAuthorBalance.add(tipAmount)
 
       assert.equal(newAuthorBalance.toString(), expectedBalance.toString())
+
+
+      // FAILURE: Tries to tip a post that does not exist
+        // Ensures a valid Id is passed in whenever the tip function is called
+        // We tip the non-existent Post #99
+        // We also add a require statement to our contract with stipulations for the id
+      await socialNetwork.tipPost(99, { from: tipper, value: web3.utils.toWei('1', 'Ether') }).should.be.rejected;
 
 
     })
