@@ -1,8 +1,49 @@
 import React, { Component } from 'react';
+import Web3 from 'web3';
 import logo from '../logo.png';
 import './App.css';
 
+
 class App extends Component {
+
+
+  async componentWillMount() {
+    // Call and load our web3 - wait for it to happen before we do anything else
+    await this.loadWeb3()
+    // Call our function that shows us we are connected to web3
+    await this.loadBlockchainData()
+  }
+
+
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
+
+
+  async loadBlockchainData() {
+    // Establish connection to web3 and stash the web3 value
+    const web3 = window.web3
+    // Log to validate connection
+    console.log(web3)
+    // Fetch the account we are connected to with MetaMask and log it onto the page
+      // getAccounts is a callback to the web3-eth package that comes with web3js
+    const accounts = await web3.eth.getAccounts()
+    // Log the first Ganache account that we connected to via MetaMask
+    console.log("account", accounts[0])
+    console.log(accounts)
+  }
+
+
+
   render() {
     return (
       <div>
