@@ -37,9 +37,18 @@ class App extends Component {
     // Fetch the account we are connected to with MetaMask and log it onto the page
       // getAccounts is a callback to the web3-eth package that comes with web3js
     const accounts = await web3.eth.getAccounts()
+    this.setState({ account: accounts[0] })
     // Log the first Ganache account that we connected to via MetaMask
     console.log("account", accounts[0])
     console.log(accounts)
+  }
+
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      account: ''
+    }
   }
 
 
@@ -56,6 +65,13 @@ class App extends Component {
           >
             Dapp University
           </a>
+          <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+              <small className="text-secondary">
+                <small id="account">{this.state.account}</small>
+              </small>
+            </li>
+          </ul>
         </nav>
         <div className="container-fluid mt-5">
           <div className="row">
