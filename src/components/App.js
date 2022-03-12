@@ -45,6 +45,8 @@ class App extends Component {
     // NetworkID
     const networkId = await web3.eth.net.getId()
     console.log(networkId)
+    const networkData = SocialNetwork.networks[networkId]
+    console.log(networkData)
     // Address
 
     // ABI
