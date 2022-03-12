@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import logo from '../logo.png';
 import './App.css';
+import SocialNetwork from '../abis/SocialNetwork.json'
 import Navbar from './Navbar';
-
 
 class App extends Component {
 
@@ -42,6 +42,12 @@ class App extends Component {
     // Log the first Ganache account that we connected to via MetaMask
     console.log("account", accounts[0])
     console.log(accounts)
+    // NetworkID
+    const networkId = await web3.eth.net.getId()
+    console.log(networkId)
+    // Address
+
+    // ABI
   }
 
 
