@@ -47,6 +47,11 @@ class App extends Component {
     console.log(networkId)
     const networkData = SocialNetwork.networks[networkId]
     console.log(networkData)
+    if(networkData) {
+      const socialNetwork = new web3.eth.Contract(SocialNetwork.abi, networkData.address)
+    } else {
+      window.alert('SocialNetwork contract not deployed to the detected network.')
+    }
     // Address
 
     // ABI
