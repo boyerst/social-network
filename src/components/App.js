@@ -42,26 +42,32 @@ class App extends Component {
     // Log the first Ganache account that we connected to via MetaMask
     console.log("account", accounts[0])
     console.log(accounts)
-    // NetworkID
+    // Fetch NetworkID
     const networkId = await web3.eth.net.getId()
     console.log(networkId)
     const networkData = SocialNetwork.networks[networkId]
     console.log(networkData)
     if(networkData) {
+      // Fetch and pass in Address and ABI
       const socialNetwork = new web3.eth.Contract(SocialNetwork.abi, networkData.address)
+      this.setState({ socialNetwork })
+      const postCount = await socialNetwork.methods.postCount().call()
+      this.setState({ postCount })
+      console.log(postCount)
+      
     } else {
       window.alert('SocialNetwork contract not deployed to the detected network.')
     }
-    // Address
 
-    // ABI
   }
 
 
   constructor(props) {
     super(props)
     this.state = {
-      account: ''
+      account: '',
+      socialNetwork: null,
+      postCount: 0
     }
   }
 
