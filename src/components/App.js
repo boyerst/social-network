@@ -93,25 +93,23 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logo} className="App-logo" alt="logo" />
-                </a>
-                <h1>Dapp University Starter Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LEARN BLOCKCHAIN <u><b>NOW! </b></u>
-                </a>
+              { this.state.posts.map((post, key) => {
+                return(
+                  <div className="card mb-4" key={key}>
+                    <div className="card-header">
+                      <small className="text-muted">Post Header</small>
+                    </div>
+                    <ul id="postList" className="list-group list-group-flush">
+                      <li className="list-group-item">
+                        <p>Post Body</p>
+                      </li>
+                      <li key={key} className="list-group-item py-2">
+                        <p>Post Footer</p>
+                      </li>
+                    </ul>
+                  </div>
+                )
+              })}
               </div>
             </main>
           </div>
