@@ -54,7 +54,18 @@ class App extends Component {
       const postCount = await socialNetwork.methods.postCount().call()
       this.setState({ postCount })
       console.log(postCount)
-      
+      // Load posts
+      for (var i = 1; i <= postCount; i++) {
+        // Declare and fetch the post corresponding to the index (postId)
+          // We call() the posts mapping by referencing contract.methods.method(Id)
+        const post = await socialNetwork.methods.posts(i).call()
+        // Store it in an array in state
+        this.setState({
+          // Instead of updating the actual array, we use ES6 spread operator
+          posts: [...this.state.posts, post]
+        })
+      }
+      console.log({ posts: this.state.posts })
     } else {
       window.alert('SocialNetwork contract not deployed to the detected network.')
     }
@@ -67,7 +78,8 @@ class App extends Component {
     this.state = {
       account: '',
       socialNetwork: null,
-      postCount: 0
+      postCount: 0,
+      posts: []
     }
   }
 
