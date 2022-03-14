@@ -91,20 +91,27 @@ class App extends Component {
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
+            <main role="main" className="col-lg-12 ml-auto mr-auto" style= {{ maxWidth: '500px' }}>
               <div className="content mr-auto ml-auto">
               { this.state.posts.map((post, key) => {
                 return(
                   <div className="card mb-4" key={key}>
                     <div className="card-header">
-                      <small className="text-muted">Post Header</small>
+                      <small className="text-muted">{post.author}</small>
                     </div>
                     <ul id="postList" className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <p>Post Body</p>
+                        <p>{post.content}</p>
                       </li>
                       <li key={key} className="list-group-item py-2">
-                        <p>Post Footer</p>
+                        <small className="float-left mt-1 text-muted">
+                          TIPS: 1 ETH
+                        </small>
+                        <button className="btn btn-link btn-sm float-right pt-0">
+                          <span>
+                            TIP .1 ETH
+                          </span>
+                        </button>
                       </li>
                     </ul>
                   </div>
