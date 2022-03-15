@@ -11,15 +11,25 @@ class Main extends Component {
           <main role="main" className="col-lg-12 ml-auto mr-auto" style= {{ maxWidth: '500px' }}>
             <div className="content mr-auto ml-auto">
             <p>&nbsp;</p>
+                {/* Use onSubmit to trigger this event whenever the form is submitted 
+                    We pass in event to represent our function
+                */}
                 <form onSubmit={(event) => {
+                  // Prevent the page from reloading
                   event.preventDefault()
                   const content = this.postContent.value
+                  // Call the function here -> executed in App.js which calls smart contract -> smart contract function executes
+                  // How do we know what the content is? SEE var declared above and ref attribute in <input>
                   this.props.createPost(content)
                 }}>
                 <div className="form-group mr-sm-2">
                   <input
                     id="postContent"
                     type="text"
+                    // ref = the input of the <input> form
+                    // We pass the input in and state that the input = this.postContent
+                    // In our onSubmit, we declare 'content' as this.postContent.value AKA this.input.value
+                    // Then we pass in our content variable to the function
                     ref={(input) => { this.postContent = input }}
                     className="form-control"
                     placeholder="What's on your mind?"

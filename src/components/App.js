@@ -72,7 +72,16 @@ class App extends Component {
     } else {
       window.alert('SocialNetwork contract not deployed to the detected network.')
     }
+  }
 
+  createPost(content) {
+    this.setState({ loading: true })
+    // We call the contract with this.state.socialNetwork
+    // Then we add our method and .send() our method
+    // When we .send() we pass in the author's account
+    // .once receipt received we tell our state that the loader is no longer loading
+    this.state.socialNetwork.methods.createPost(content).send({ from: this.state.account }).once('receipt', (receipt) => {this.setState({ loading: false })
+    })
   }
 
 
@@ -85,6 +94,8 @@ class App extends Component {
       posts: [],
       loading: true
     }
+
+    this.createPost = this.createPost.bind(this)
   }
 
 
@@ -95,7 +106,10 @@ class App extends Component {
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main posts={this.state.posts} />
+          : <Main 
+              posts={this.state.posts} 
+              createPost={this.createPost}
+            />
         }
       </div>
     );
