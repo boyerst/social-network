@@ -66,8 +66,12 @@ class App extends Component {
           // Instead of updating the actual array, we use ES6 spread operator
           posts: [...this.state.posts, post]
         })
-        this.setState({ loading: false })
       }
+      // Sort the posts (highest first)
+      this.setState({ 
+        posts: this.state.posts.sort((a, b) => b.tipAmount - a.tipAmount )
+      })
+      this.setState({ loading: false })
       console.log({ posts: this.state.posts })
     } else {
       window.alert('SocialNetwork contract not deployed to the detected network.')
