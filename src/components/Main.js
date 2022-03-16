@@ -58,10 +58,21 @@ class Main extends Component {
                       <small className="float-left mt-1 text-muted">
                         TIPS: {window.web3.utils.fromWei(post.tipAmount.toString(), 'Ether')}
                       </small>
-                      <button className="btn btn-link btn-sm float-right pt-0">
-                        <span>
+                      <button 
+                        className="btn btn-link btn-sm float-right pt-0"
+                        name={post.id}
+                        onClick={(event) => {
+                          // Fetch Post ID (first use name attribute above)
+                            // We declare the name attribute as post.id, then we target the 'name' attribute using 'event.target.name'
+                              // The value that 'event.target.name' represents will be passed to tipPost()
+                          // Declare tipAmount
+                            // We set the tip as constant 0.1 ETH, and convert it to wei because the 'value' parameter for the web3 .send method requires wei denomination
+                          let tipAmount = window.web3.utils.toWei('0.1', 'Ether')
+                          this.props.tipPost(event.target.name, tipAmount)
+                        }}
+                      >
                           TIP .1 ETH
-                        </span>
+                      
                       </button>
                     </li>
                   </ul>

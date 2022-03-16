@@ -80,7 +80,17 @@ class App extends Component {
     // Then we add our method and .send() our method
     // When we .send() we pass in the author's account
     // .once receipt received we tell our state that the loader is no longer loading
-    this.state.socialNetwork.methods.createPost(content).send({ from: this.state.account }).once('receipt', (receipt) => {this.setState({ loading: false })
+    this.state.socialNetwork.methods.createPost(content).send({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
+
+  tipPost(id, tipAmount) {
+    this.setState({ loading: true })
+    this.state.socialNetwork.methods.tipPost(id).send({ from: this.state.account, value: tipAmount })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
     })
   }
 
@@ -96,6 +106,7 @@ class App extends Component {
     }
 
     this.createPost = this.createPost.bind(this)
+    this.tipPost = this.tipPost.bind(this)
   }
 
 
@@ -109,6 +120,7 @@ class App extends Component {
           : <Main 
               posts={this.state.posts} 
               createPost={this.createPost}
+              tipPost={this.tipPost}
             />
         }
       </div>
